@@ -1,26 +1,26 @@
-import {NumbersCollection} from './NumbersCollection';
-import {StringsCollection} from './StringsCollection';
-import {LinkedListCollection} from './LinkedListCollection';
-import {Sorter} from './sorter';
+import { MatchReader } from './MatchReader';
+import {MatchResults} from './MatchResults';
+import {CsvFileReader} from './CsvFileReader';
+import {WinAnalysis} from './WinsAnalysis';
+import {Summary} from './Summary';
+import {BuildHTML_Report} from './buildHTML_Report';
 
-const firstNumbersCollection = new NumbersCollection([6,13,-4, 8, -8]);
-firstNumbersCollection.sort();
-console.log(firstNumbersCollection.data)
+const firstCsvReader = new CsvFileReader('football.csv');
 
 
- const firstStringsCollection = new StringsCollection('hammed');
-// const SorterString = new Sorter(firstStringsCollection);
-firstStringsCollection.sort();
-console.log(firstStringsCollection.collection);
 
-const firstLinkedListCollection = new LinkedListCollection();
-firstLinkedListCollection.addNode(4);
-firstLinkedListCollection.addNode(2);
-firstLinkedListCollection.addNode(-8);
-firstLinkedListCollection.addNode(9);
-firstLinkedListCollection.addNode(-3);
+const firstMatchReader = new MatchReader(firstCsvReader);
+firstMatchReader.load();
+console.log(firstMatchReader.matches);
 
- 
-// const sorterLinkedListCollection = new Sorter (firstLinkedListCollection);
- firstLinkedListCollection.sort();
- firstLinkedListCollection.print(); 
+const firstWinAnalysis = new WinAnalysis('Man City');
+firstWinAnalysis.run(firstMatchReader.matches);
+
+const firstBuildHTML_Report = new BuildHTML_Report();
+
+const firstSummary = new Summary(firstWinAnalysis , firstBuildHTML_Report )
+
+firstSummary.buildAndPrintReport(firstMatchReader.matches);
+
+
+
